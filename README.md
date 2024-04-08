@@ -16,7 +16,8 @@ Para ejecutar el programa y probar los algoritmos con diferentes tamaños de ent
 n_range = [10, 50, 100, 200, 500, 1000]
 min_length = 3
 max_length = 10
-test_and_plot(n_range, min_length, max_length)´´´
+test_and_plot(n_range, min_length, max_length)
+```
 
 Esto generará casos de prueba aleatorios con las longitudes especificadas, ejecutará los algoritmos en esos casos de prueba y mostrará un gráfico comparativo de los tiempos de ejecución.
 
