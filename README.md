@@ -22,6 +22,7 @@ test_and_plot(n_range, min_length, max_length)
 Esto generará casos de prueba aleatorios con las longitudes especificadas, ejecutará los algoritmos en esos casos de prueba y mostrará un gráfico comparativo de los tiempos de ejecución.
 
 ## Requerimientos 
+
 1. Python 3.x
 2. matplotlib
 

@@ -59,23 +59,26 @@ def test_and_plot(n_range, min_length, max_length):
     divide_conquer_times = []
     dynamic_times = []
     greedy_times = []
+    divide_conquer_solutions = []
+    dynamic_solutions = []
+    greedy_solutions = []
     
     for n in n_range:
         strings = generate_test_cases(n, min_length, max_length)
         
         # Divide and Conquer
         start_time = time.time()
-        longest_non_prefix_set_divide_conquer(strings)
+        divide_conquer_solutions.append(longest_non_prefix_set_divide_conquer(strings))
         divide_conquer_times.append(time.time() - start_time)
         
         # Dynamic Programming
         start_time = time.time()
-        longest_non_prefix_set_dynamic(strings)
+        dynamic_solutions.append(longest_non_prefix_set_dynamic(strings))
         dynamic_times.append(time.time() - start_time)
         
         # Greedy
         start_time = time.time()
-        longest_non_prefix_set_greedy(strings)
+        greedy_solutions.append(longest_non_prefix_set_greedy(strings))
         greedy_times.append(time.time() - start_time)
     
     # Plot the results
@@ -88,10 +91,23 @@ def test_and_plot(n_range, min_length, max_length):
     plt.title('Longest Non-Prefix Set Algorithms')
     plt.legend()
     plt.grid()
-    plt.show()
+
+    # Save the plot as an image
+    plt.savefig('plot.png')
+
+    # Print the execution times and solutions
+    print("Divide and Conquer: ", divide_conquer_times)
+    print("Divide and Conquer Solutions: ", divide_conquer_solutions)
+    print("Dynamic Programming: ", dynamic_times)
+    print("Dynamic Programming Solutions: ", dynamic_solutions)
+    print("Greedy: ", greedy_times)
+    print("Greedy Solutions: ", greedy_solutions)
+
+
 
 # Test the algorithms with different input sizes
-n_range = [10, 50, 100, 200, 500, 1000]
+n_range = [10, 50, 100, 200, 500, 1000, 5000]
 min_length = 3
 max_length = 10
 test_and_plot(n_range, min_length, max_length)
+
