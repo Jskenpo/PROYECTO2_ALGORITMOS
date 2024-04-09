@@ -13,18 +13,18 @@ def longest_non_prefix_set_divide_conquer(strings):
     left_set = strings[:mid]
     right_set = strings[mid:]
     
+    # Recursively find the largest non-prefix set for left and right subsets
     left_size = longest_non_prefix_set_divide_conquer(left_set)
     right_size = longest_non_prefix_set_divide_conquer(right_set)
     
-    merged_set = left_set + right_set
-    merged_set = sorted(merged_set, key=len)
-    merged_size = 1
-    prev_string = merged_set[0]
-    for s in merged_set[1:]:
-        if not s.startswith(prev_string):
+    # Merge and find the largest non-prefix set for the merged set
+    merged_set = set(left_set) | set(right_set)
+    merged_size = 0
+    for s in merged_set:
+        if all(not s.startswith(t) for t in merged_set if t != s):
             merged_size += 1
-            prev_string = s
     
+    # Return the maximum size among left, right, and merged sets
     return max(left_size, right_size, merged_size)
 
 def longest_non_prefix_set_dynamic(strings):
@@ -52,7 +52,7 @@ def generate_test_cases(n, min_length, max_length):
     strings = []
     for _ in range(n):
         length = random.randint(min_length, max_length)
-        strings.append(''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=length)))
+        strings.append(''.join(random.choices('abcdefghij', k=length)))
     return strings
 
 def test_and_plot(n_range, min_length, max_length):
@@ -65,6 +65,7 @@ def test_and_plot(n_range, min_length, max_length):
     
     for n in n_range:
         strings = generate_test_cases(n, min_length, max_length)
+
         
         # Divide and Conquer
         start_time = time.time()
@@ -108,6 +109,6 @@ def test_and_plot(n_range, min_length, max_length):
 # Test the algorithms with different input sizes
 n_range = [10, 50, 100, 200, 500, 1000, 5000]
 min_length = 3
-max_length = 10
+max_length = 5
 test_and_plot(n_range, min_length, max_length)
 
