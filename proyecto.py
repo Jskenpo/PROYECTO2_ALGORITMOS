@@ -28,15 +28,20 @@ def longest_non_prefix_set_divide_conquer(strings):
     return max(left_size, right_size, merged_size)
 
 def longest_non_prefix_set_dynamic(strings):
+    strings.sort(key=len)
     n = len(strings)
-    dp = [1] * n
-    
+    dp = [0] * n
+    dp[0] = 1
+    prefix_set = {strings[0]}
+
     for i in range(1, n):
-        for j in range(i):
-            if not strings[i].startswith(strings[j]) and not strings[j].startswith(strings[i]):
-                dp[i] = max(dp[i], dp[j] + 1)
-    
-    return max(dp)
+        if not any(strings[i].startswith(s) for s in prefix_set):
+            dp[i] = dp[i-1] + 1
+            prefix_set.add(strings[i])
+        else:
+            dp[i] = dp[i-1]
+
+    return dp[-1]
 
 def longest_non_prefix_set_greedy(strings):
     result = []
@@ -46,7 +51,6 @@ def longest_non_prefix_set_greedy(strings):
             result.append(s)
     
     return len(result)
-
 
 def generate_test_cases(n, min_length, max_length):
     strings = []
@@ -66,7 +70,6 @@ def test_and_plot(n_range, min_length, max_length):
     for n in n_range:
         strings = generate_test_cases(n, min_length, max_length)
 
-        
         # Divide and Conquer
         start_time = time.time()
         divide_conquer_solutions.append(longest_non_prefix_set_divide_conquer(strings))
@@ -104,11 +107,8 @@ def test_and_plot(n_range, min_length, max_length):
     print("Greedy: ", greedy_times)
     print("Greedy Solutions: ", greedy_solutions)
 
-
-
 # Test the algorithms with different input sizes
 n_range = [10, 50, 100, 200, 500, 1000, 5000]
 min_length = 3
 max_length = 5
 test_and_plot(n_range, min_length, max_length)
-
